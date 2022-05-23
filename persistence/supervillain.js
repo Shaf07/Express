@@ -16,4 +16,5 @@ const supervillainSchema = new Schema({
 
 const supervillain = model('supervillain', supervillainSchema);
 
-module.export = supervillain;
+module.exports = supervillain;
+
