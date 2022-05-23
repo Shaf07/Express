@@ -32,6 +32,7 @@ router.post("/newSuper", (req, res, next) => {
     })
 });
 
+
 router.post("/newMultipleSupers", (req, res, next) => {
     const data = req.body;
     data.forEach((supervillainData) => {
@@ -43,8 +44,8 @@ router.post("/newMultipleSupers", (req, res, next) => {
         next(error);
     });
     res.status(201).send("All data entries successful");
-});
-
+    })
+})
 
 
 router.get("/getById/:id", (req, res, next) => {
@@ -63,6 +64,14 @@ router.get("/findAll", async (req, res) => {
     }
 });
 
+router.put("/change/:id", (req, res, next) => {
+    const data = req.body;
+    const id = req.params.id;
+    supervillain.findByIdAndUpdate(id, data, (error, supervillain) => {
+        res.status(200).send("Thanks");
+    });
+});
+
 router.delete("/delete/:id", (req, res, next) => {
     supervillain.findByIdAndDelete(req.params.id, (error) => {
     res.status(202).send("welcome to delete");
@@ -70,18 +79,12 @@ router.delete("/delete/:id", (req, res, next) => {
 });
 
 
-
-
-
-
-
-router.get("/findSupervillains/:name", (req, res) => {
-    console.log(req);
-    console.log(req.params);
-    res.send("found");
-})
-
-
+router.get("/findSupervillains/:name", (req, res, next) => {
+    const name = req.params.name;
+    supervillain.find({name: `${name}`}, (error, supervillain) => {
+        res.status(200).send(supervillain);
+    }) 
+});
 
 
 router.patch("/update/:id", (req, res) => {
